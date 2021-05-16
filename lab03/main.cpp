@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <vector>
+#include "histogram.h"
 using namespace std;
 const size_t SCREEN_WIDTH = 80;
 const size_t MAX_ASTERISK = SCREEN_WIDTH - 3 - 1;
@@ -15,7 +16,7 @@ input_numbers(size_t count) {
     return result;
 }
 
-void
+/*void
 find_minmax(vector<double> numbers, double& min, double& max) {
     min = numbers[0];
     max = numbers[0];
@@ -24,7 +25,7 @@ find_minmax(vector<double> numbers, double& min, double& max) {
         if (x < min) min = x;
         else if (x > max) max = x;
     }
-}
+}*/
 
 vector<size_t>
 make_histogram(vector<double> numbers, size_t bin_count){
