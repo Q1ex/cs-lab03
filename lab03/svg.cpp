@@ -28,9 +28,66 @@ void
 svg_rect(double x, double y, double width, double height, string stroke, string fill){
     cout << "<rect x='" << x << "' y='" <<y<< "' width='"<<width<<"' height='"<<height<<"' stroke='"<<stroke<<"' fill='"<<fill<<"'></rect>";
 }
+/*
+void
+show_histogram_svg(const vector<size_t>& bins){
+const auto IMAGE_WIDTH = 400;
+const auto IMAGE_HEIGHT = 300;
+const auto TEXT_LEFT = 20;
+const auto TEXT_BASELINE = 20;
+const auto TEXT_WIDTH = 50;
+const auto BIN_HEIGHT = 30;
+const auto BLOCK_WIDTH = 10;
+const size_t SCREEN_WIDTH = 80;
+const size_t MAX_ASTERISK = SCREEN_WIDTH - 3 - 1;
 
+    svg_begin(IMAGE_WIDTH, IMAGE_HEIGHT);
+    double top = 0;
+for (size_t bin : bins) {
+    const double bin_width = BLOCK_WIDTH * bin;
+    svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bin));
+    svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT);
+    top += BIN_HEIGHT;
+}
+    svg_end();
+}*/
 
 void
+show_histogram_svg(const vector<size_t>& bins){
+const auto IMAGE_WIDTH = 400;
+
+const auto TEXT_LEFT = 20;
+const auto TEXT_BASELINE = 20;
+const auto TEXT_WIDTH = 30;
+const auto BIN_HEIGHT = 30;
+const auto BLOCK_WIDTH = 20;
+const size_t SCREEN_WIDTH = 80;
+const size_t MAX_ASTERISK = SCREEN_WIDTH - 3 - 1;
+
+size_t max_count = bins[0]; //поиск max из корзин
+    for (size_t bin : bins)
+        if (bin > max_count)
+            max_count = bin;
+
+const auto IMAGE_HEIGHT = max_count* BIN_HEIGHT + TEXT_WIDTH + 50;
+
+svg_begin(IMAGE_WIDTH, IMAGE_HEIGHT);
+    double top = 0;
+for (size_t bin : bins) {
+    const double bin_height = BIN_HEIGHT * bin;
+    svg_text(TEXT_LEFT +top, TEXT_BASELINE, to_string(bin));
+    svg_rect(TEXT_LEFT +top, TEXT_WIDTH, BLOCK_WIDTH, bin_height);
+    top+=BLOCK_WIDTH;
+}
+svg_end();
+}
+
+
+
+
+
+
+/*void
 show_histogram_svg(const vector<size_t>& bins){
     const auto IMAGE_WIDTH = 400;
     const auto IMAGE_HEIGHT = 300;
@@ -74,4 +131,4 @@ show_histogram_svg(const vector<size_t>& bins){
 
 
     svg_end();
-}
+}*/
