@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include "histogram.h"
+#include "svg.h"
 using namespace std;
 const size_t SCREEN_WIDTH = 80;
 const size_t MAX_ASTERISK = SCREEN_WIDTH - 3 - 1;
@@ -79,6 +80,34 @@ show_histogram_text(vector<size_t> bins){
 
 }
 
+int main()
+{
+
+    size_t number_count;
+    cerr << "Enter number count: ";
+    cin >> number_count;
+    const auto numbers = input_numbers(number_count);
+
+
+    size_t bin_count;
+    cerr << "bin_count: ";
+    cin >> bin_count;
+    const auto bins = make_histogram(numbers, bin_count);
+    //show_histogram_text(bins);
+    show_histogram_svg(bins);
+}
+
+
+
+
+
+
+
+
+
+
+
+/*
 ///SVG///////////////////////////////////////////////////////////////
 void
 svg_begin(double width, double height) {
@@ -170,25 +199,9 @@ for (size_t bin : bins) {
     top += BIN_HEIGHT;
 }
     svg_end();
-} */
+}
 
 
 ///SVG/////////////////////////////////////////////////////////////////
 
-
-int main()
-{
-
-    size_t number_count;
-    cerr << "Enter number count: ";
-    cin >> number_count;
-    const auto numbers = input_numbers(number_count);
-
-
-    size_t bin_count;
-    cerr << "bin_count: ";
-    cin >> bin_count;
-    const auto bins = make_histogram(numbers, bin_count);
-    //show_histogram_text(bins);
-    show_histogram_svg(bins);
-}
+*/
