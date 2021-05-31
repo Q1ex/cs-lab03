@@ -7,6 +7,11 @@ using namespace std;
 void
 find_minmax(vector<double> numbers, double& min, double& max);
 
+size_t
+height_sp(const vector<size_t>& bins);
+
+
+
 
 
 

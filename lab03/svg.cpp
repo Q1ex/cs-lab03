@@ -1,4 +1,5 @@
 #include "svg.h"
+#include "histogram.h"
 #include <iostream>
 using namespace std;
 void
@@ -51,7 +52,25 @@ for (size_t bin : bins) {
 }
     svg_end();
 }*/
+///
 
+
+
+
+/*size_t
+height_s(const vector<size_t>& bins){
+const auto BIN_HEIGHT = 30;
+size_t max_count = bins[0]; //поиск max из корзин
+    for (size_t bin : bins)
+        if (bin > max_count)
+            max_count = bin;
+size_t height = max_count* BIN_HEIGHT +50;
+return height;
+
+}
+*/
+
+///
 void
 show_histogram_svg(const vector<size_t>& bins){
 const auto IMAGE_WIDTH = 400;
@@ -69,7 +88,7 @@ size_t max_count = bins[0]; //поиск max из корзин
         if (bin > max_count)
             max_count = bin;
 
-const auto IMAGE_HEIGHT = max_count* BIN_HEIGHT + TEXT_WIDTH + 50;
+size_t IMAGE_HEIGHT = height_sp(bins);
 
 svg_begin(IMAGE_WIDTH, IMAGE_HEIGHT);
     double top = 0;
@@ -81,6 +100,7 @@ for (size_t bin : bins) {
 }
 svg_end();
 }
+
 
 
 
