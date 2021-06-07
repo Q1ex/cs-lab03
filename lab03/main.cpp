@@ -31,8 +31,10 @@ input_numbers(istream& in, size_t count) {
 
 
 Input
-read_input(istream& in) {
+read_input(istream& in, bool prompt) {
     Input data;
+    if (prompt){
+
 
     cerr << "Enter number count: ";
     size_t number_count;
@@ -43,8 +45,14 @@ read_input(istream& in) {
 
     cerr << "Enter bin count: ";
         in >> data.bin_count;
+    }
+    else{
+     size_t number_count;
+        in >> number_count;
+        data.numbers = input_numbers(in, number_count);
+        in >> data.bin_count;
 
-
+    }
 
     return data;
 }
@@ -104,7 +112,7 @@ show_histogram_text(vector<size_t> bins){
 int main()
 {
     Input input;
-    input = read_input(cin);
+    input = read_input(cin, true);
     /*size_t number_count;
     cerr << "Enter number count: ";
     cin >> number_count;
