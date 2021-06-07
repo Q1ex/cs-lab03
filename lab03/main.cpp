@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <vector>
+#include <curl/curl.h>
 #include "histogram.h"
 #include "svg.h"
 using namespace std;
@@ -109,10 +110,19 @@ show_histogram_text(vector<size_t> bins){
 
 }
 
-int main()
+int main(int argc, char* argv[])
 {
-    //Input input;
-    const auto input = read_input(cin, true);
+     if (argc>1)
+    {
+        cout<<argc<<"\n";
+        for (size_t i=0;i<argc;i++)
+        {
+            cout<<"argv["<<i<<"]="<<argv[i]<<"\n";
+        }
+    }
+    curl_global_init(CURL_GLOBAL_ALL);
+
+    const auto  input = read_input(cin, true);
     /*size_t number_count;
     cerr << "Enter number count: ";
     cin >> number_count;
