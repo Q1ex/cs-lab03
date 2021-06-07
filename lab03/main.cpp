@@ -121,6 +121,11 @@ int main(int argc, char* argv[])
             curl_easy_setopt(curl, CURLOPT_URL, argv[1]);
             res = curl_easy_perform(curl);
             curl_easy_cleanup(curl);
+            if (res)
+            {
+                cerr << curl_easy_strerror(res) << endl;
+                exit(1);
+            }
 
         }
     }
