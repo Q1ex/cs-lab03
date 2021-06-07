@@ -7,10 +7,6 @@
 using namespace std;
 const size_t SCREEN_WIDTH = 80;
 const size_t MAX_ASTERISK = SCREEN_WIDTH - 3 - 1;
-struct Input {
-    vector<double> numbers;
-    size_t bin_count;
-};
 
 
 /*vector<double>
