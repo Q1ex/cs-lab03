@@ -7,6 +7,11 @@
 using namespace std;
 const size_t SCREEN_WIDTH = 80;
 const size_t MAX_ASTERISK = SCREEN_WIDTH - 3 - 1;
+struct Input {
+    vector<double> numbers;
+    size_t bin_count;
+};
+
 
 /*vector<double>
 input_numbers(size_t count) {
@@ -27,23 +32,44 @@ input_numbers(istream& in, size_t count) {
 
 }
 
-vector<size_t>
-make_histogram(vector<double> numbers, size_t bin_count){
-    double min, max;
-    find_minmax(numbers,min,max);
-    double bin_size = (max-min)/bin_count;
 
-    vector<size_t> bins(bin_count);
-    size_t number_count = numbers.size();
+
+Input
+read_input(istream& in) {
+    Input data;
+
+    cerr << "Enter number count: ";
+    size_t number_count;
+    in >> number_count;
+
+    cerr << "Enter numbers: ";
+    data.numbers = input_numbers(in, number_count);
+
+    cerr << "Enter bin count: ";
+        in >> data.bin_count;
+
+
+
+    return data;
+}
+
+vector<size_t>
+make_histogram(Input a){
+    double min, max;
+    find_minmax(a.numbers,min,max);
+    double bin_size = (max-min)/a.bin_count;
+
+    vector<size_t> bins(a.bin_count);
+    size_t number_count = a.numbers.size();
     for (size_t i = 0; i < number_count; i++)
     {
         bool found = false;
-        for (size_t j = 0; (j < bin_count - 1) && !found; j++)
+        for (size_t j = 0; (j < a.bin_count - 1) && !found; j++)
         {
             auto lo = min + j * bin_size;
             auto hi = min + (j + 1) * bin_size;
 
-            if ((lo <= numbers[i]) && (numbers[i] < hi))
+            if ((lo <= a.numbers[i]) && (a.numbers[i] < hi))
             {
                 bins[j]++;
                 found = true;
@@ -52,7 +78,7 @@ make_histogram(vector<double> numbers, size_t bin_count){
         }
         if (!found)
         {
-            bins[bin_count - 1]++;
+            bins[a.bin_count - 1]++;
         }
     }
     return bins;
@@ -81,17 +107,18 @@ show_histogram_text(vector<size_t> bins){
 
 int main()
 {
-
-    size_t number_count;
+    Input input;
+    input = read_input(cin);
+    /*size_t number_count;
     cerr << "Enter number count: ";
     cin >> number_count;
-    const auto numbers = input_numbers(cin, number_count);
+    const auto numbers = input_numbers(cin, number_count);*/
 
 
-    size_t bin_count;
+   /* size_t bin_count;
     cerr << "bin_count: ";
-    cin >> bin_count;
-    const auto bins = make_histogram(numbers, bin_count);
+    cin >> bin_count;*/
+    const auto bins = make_histogram(input);
     //show_histogram_text(bins);
     show_histogram_svg(bins);
 }
