@@ -112,15 +112,19 @@ show_histogram_text(vector<size_t> bins){
 
 int main(int argc, char* argv[])
 {
+    curl_global_init(CURL_GLOBAL_ALL);
      if (argc>1)
     {
-        cout<<argc<<"\n";
-        for (size_t i=0;i<argc;i++)
-        {
-            cout<<"argv["<<i<<"]="<<argv[i]<<"\n";
+        CURL *curl = curl_easy_init();
+        if(curl){
+             CURLcode res;
+            curl_easy_setopt(curl, CURLOPT_URL, argv[1]);
+            res = curl_easy_perform(curl);
+            curl_easy_cleanup(curl);
+
         }
     }
-    curl_global_init(CURL_GLOBAL_ALL);
+
 
     const auto  input = read_input(cin, true);
     /*size_t number_count;
