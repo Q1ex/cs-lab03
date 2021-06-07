@@ -1,4 +1,5 @@
 #include "histogram.h"
+#include "svg.h"
 
 #include <cassert>
 
@@ -55,8 +56,8 @@ test_img_empty(){
 void
 test_img_one(){
     size_t h = 0;
-    h = height_sp({1,2});
-    assert(h == 110);
+    h = height_sp({1});
+    assert(h == 80);
 }
 
 
