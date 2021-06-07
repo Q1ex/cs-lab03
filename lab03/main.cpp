@@ -111,8 +111,8 @@ show_histogram_text(vector<size_t> bins){
 
 int main()
 {
-    Input input;
-    input = read_input(cin, true);
+    //Input input;
+    const auto input = read_input(cin, true);
     /*size_t number_count;
     cerr << "Enter number count: ";
     cin >> number_count;
