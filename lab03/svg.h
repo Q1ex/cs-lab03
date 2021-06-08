@@ -3,7 +3,10 @@
 
 #include <vector>
 #include <string>
+#include <sstream>
+#include <windows.h>
 using namespace std;
+string make_info_text();
 void svg_begin(double width, double height);
 void svg_end();
 void svg_text(double left, double baseline, string text);

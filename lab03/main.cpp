@@ -84,7 +84,7 @@ show_histogram_text(vector<size_t> bins){
 int main()
 {
 
-/*
+
     size_t number_count;
     cerr << "Enter number count: ";
     cin >> number_count;
@@ -96,27 +96,7 @@ int main()
     cin >> bin_count;
     const auto bins = make_histogram(numbers, bin_count);
     //show_histogram_text(bins);
-    show_histogram_svg(bins); */
-
-    DWORD info = GetVersion();
-    DWORD platform = info >> 16;
-    DWORD mask = 0x0000ffff;
-    DWORD version = info & mask;
-    DWORD mask_2 = 0x0000ff;
-    if ((info & 0x80000000) == 0)
-    {
-        DWORD version_major = version & mask_2;
-        DWORD version_minor = version >> 8;
-        DWORD build = platform;
-        printf("Windows v%u.%u (build %u)\n",version_major, version_minor, build);
-    }
-    char Comp_name[MAX_COMPUTERNAME_LENGTH + 1];
-    DWORD size = sizeof(Comp_name);
-    GetComputerName(Comp_name, &size);
-    printf("Computer name: %s\n",Comp_name);
-
-
-
+    show_histogram_svg(bins);
 
 
 }
