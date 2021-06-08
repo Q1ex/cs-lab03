@@ -4,6 +4,7 @@
 #include <vector>
 #include "histogram.h"
 #include "svg.h"
+#include <windows.h>
 using namespace std;
 const size_t SCREEN_WIDTH = 80;
 const size_t MAX_ASTERISK = SCREEN_WIDTH - 3 - 1;
@@ -83,6 +84,7 @@ show_histogram_text(vector<size_t> bins){
 int main()
 {
 
+/*
     size_t number_count;
     cerr << "Enter number count: ";
     cin >> number_count;
@@ -94,7 +96,12 @@ int main()
     cin >> bin_count;
     const auto bins = make_histogram(numbers, bin_count);
     //show_histogram_text(bins);
-    show_histogram_svg(bins);
+    show_histogram_svg(bins); */
+    DWORD WINAPI GetVersion(void);
+    printf("Win version in Hex: %x \n", GetVersion());
+    printf("Win version in Dec: %u \n",GetVersion());
+
+
 }
 
 
