@@ -12,15 +12,7 @@ const size_t SCREEN_WIDTH = 80;
 const size_t MAX_ASTERISK = SCREEN_WIDTH - 3 - 1;
 
 
-/*vector<double>
-input_numbers(size_t count) {
-    vector<double> result(count);
-    for (size_t i = 0; i < count; i++) {
-        cin >> result[i];
-    }
-    return result;
-}
-*/
+
 vector<double>
 input_numbers(istream& in, size_t count) {
     vector<double> result(count);
@@ -69,13 +61,19 @@ write_data(void* items, size_t item_size, size_t item_count, void* ctx) {
 }
 
 Input
-download(const string& address) {
+download(const string& address, bool verbose) {
     stringstream buffer;
     curl_global_init(CURL_GLOBAL_ALL);
     CURL *curl = curl_easy_init();
         if(curl)
         {
             CURLcode res;
+           ///ÈÍÄÈÂ
+            if(verbose)
+            {
+                curl_easy_setopt(curl,CURLOPT_VERBOSE, 1L);
+            }
+            ///
             curl_easy_setopt(curl, CURLOPT_URL, address.c_str());
             curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
             curl_easy_setopt(curl, CURLOPT_WRITEDATA, &buffer);
@@ -88,6 +86,28 @@ download(const string& address) {
         }
     curl_easy_cleanup(curl);
     return read_input(buffer, false);
+}
+
+
+Indiv input_verbose(int argc, char* argv[]){
+    Indiv use;
+    use.verbose = false;
+    use.help = false;
+    use.urladress = 0;
+
+    for(size_t i=1; i<argc;i++){
+        if(argv[i][0] == '-')
+        {
+            if(strcmp(argv[i],"-verbose") == 0)
+                use.verbose = true;
+            else
+                use.help = true;
+
+        }
+        else
+            use.urladress = argv[i];
+    }
+    return use;
 }
 
 vector<size_t>
@@ -145,13 +165,13 @@ show_histogram_text(vector<size_t> bins){
 
 int main(int argc, char* argv[])
 {
-   Input input;
+  /* Input input;
     if (argc > 1){
         input = download(argv[1]);
     }
     else{
         input = read_input(cin, true);
-    }
+    }*/
 
 
 
@@ -164,6 +184,21 @@ int main(int argc, char* argv[])
    /* size_t bin_count;
     cerr << "bin_count: ";
     cin >> bin_count;*/
+    Input input;
+    auto data = input_verbose(argc, argv);
+    if(data.help){
+        cerr<<"\nHELP:\n For web-input enter URL of page to parameters\n For using CURLOPT_VERBOSE enter '-verbose'"<<"\n";
+        exit(2);
+    }
+    ///
+    if (data.urladress){
+        input = download(data.urladress,data.verbose);
+    }
+    else{
+        input = read_input(cin, true);
+    }
+
+
     const auto bins = make_histogram(input);
     //show_histogram_text(bins);
     show_histogram_svg(bins);

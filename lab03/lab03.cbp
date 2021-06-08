@@ -14,9 +14,12 @@
 				<Compiler>
 					<Add option="-std=c++17" />
 					<Add option="-g" />
+					<Add directory="curl/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-static" />
+					<Add library="libcurl.dll.a" />
+					<Add directory="curl/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -47,6 +50,9 @@
 		</Unit>
 		<Extensions>
 			<lib_finder disable_auto="1" />
+			<code_completion />
+			<envvars />
+			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

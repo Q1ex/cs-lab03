@@ -7,6 +7,12 @@ struct Input {
     vector<double> numbers;
     size_t bin_count;
 };
+struct Indiv
+{
+    bool verbose;
+    bool help;
+    char* urladress;
+};
 
 
 void
