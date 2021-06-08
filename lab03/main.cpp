@@ -97,9 +97,21 @@ int main()
     const auto bins = make_histogram(numbers, bin_count);
     //show_histogram_text(bins);
     show_histogram_svg(bins); */
-    DWORD WINAPI GetVersion(void);
-    printf("Win version in Hex: %x \n", GetVersion());
-    printf("Win version in Dec: %u \n",GetVersion());
+
+    DWORD info = GetVersion();
+    DWORD platform = info >> 16;
+    DWORD mask = 0x0000ffff;
+    DWORD version = info & mask;
+    DWORD mask_2 = 0x0000ff;
+    if ((info & 0x80000000) == 0)
+    {
+        DWORD version_major = version & mask_2;
+        DWORD version_minor = version >> 8;
+        DWORD build = platform;
+        printf("Windows v%u.%u (build %u)",version_major, version_minor, build);
+    }
+
+
 
 
 }
