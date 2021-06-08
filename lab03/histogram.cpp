@@ -16,6 +16,8 @@ find_minmax(vector<double> numbers, double& min, double& max) {
 size_t
 height_sp(const vector<size_t>&bins){
  const auto BIN_HEIGHT = 30;
+ const auto TEXT_TOP = 20;
+
  size_t height;
 
 
@@ -24,7 +26,7 @@ height_sp(const vector<size_t>&bins){
             for (size_t bin : bins)
                 if (bin > max_count)
                     max_count = bin;
-         height = max_count* BIN_HEIGHT +50;
+         height = max_count* (BIN_HEIGHT) +50+ TEXT_TOP;
     }
 return height;
 }

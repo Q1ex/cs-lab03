@@ -5,8 +5,12 @@
 #include <curl/curl.h>
 #include "histogram.h"
 #include "svg.h"
+
 #include <sstream>
 #include <string>
+
+#include <windows.h>
+
 using namespace std;
 const size_t SCREEN_WIDTH = 80;
 const size_t MAX_ASTERISK = SCREEN_WIDTH - 3 - 1;
@@ -175,7 +179,11 @@ int main(int argc, char* argv[])
 
 
 
+
     /*size_t number_count;
+
+    size_t number_count;
+
     cerr << "Enter number count: ";
     cin >> number_count;
     const auto numbers = input_numbers(cin, number_count);*/
@@ -202,6 +210,7 @@ int main(int argc, char* argv[])
     const auto bins = make_histogram(input);
     //show_histogram_text(bins);
     show_histogram_svg(bins);
+
 
 }
 

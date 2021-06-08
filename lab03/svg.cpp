@@ -2,6 +2,29 @@
 #include "histogram.h"
 #include <iostream>
 using namespace std;
+
+string
+make_info_text(){
+    stringstream buffer;
+    DWORD info = GetVersion();
+    DWORD platform = info >> 16;
+    DWORD mask = 0x0000ffff;
+    DWORD version = info & mask;
+    DWORD mask_2 = 0x0000ff;
+    if ((info & 0x80000000) == 0)
+    {
+        DWORD version_major = version & mask_2;
+        DWORD version_minor = version >> 8;
+        DWORD build = platform;
+        buffer<< "Windows v"<<version_major<<"."<<version_minor<<"(build "<<build<<")  ";
+    }
+    char Comp_name[MAX_COMPUTERNAME_LENGTH + 1];
+    DWORD size = sizeof(Comp_name);
+    GetComputerName(Comp_name, &size);
+    buffer<<" Computer name:"<<Comp_name;
+
+    return buffer.str();
+}
 void
 svg_begin(double width, double height) {
     cout << "<?xml version='1.0' encoding='UTF-8'?>\n";
@@ -75,32 +98,35 @@ return height;
 
 void
 show_histogram_svg(const vector<size_t>& bins){
-const auto IMAGE_WIDTH = 400;
+    const auto IMAGE_WIDTH = 500;
+    const auto TEXT_TOP = 20;
+    const auto TEXT_LEFT = 20;
+        const auto TEXT_BASELINE = 20;
+    const auto TEXT_WIDTH = 30;
+    const auto BIN_HEIGHT = 30;
+    const auto BLOCK_WIDTH = 20;
+    const size_t SCREEN_WIDTH = 80;
+    const size_t MAX_ASTERISK = SCREEN_WIDTH - 3 - 1;
 
-const auto TEXT_LEFT = 20;
-const auto TEXT_BASELINE = 20;
-const auto TEXT_WIDTH = 30;
-const auto BIN_HEIGHT = 30;
-const auto BLOCK_WIDTH = 20;
-const size_t SCREEN_WIDTH = 80;
-const size_t MAX_ASTERISK = SCREEN_WIDTH - 3 - 1;
+    size_t max_count = bins[0]; //поиск max из корзин
+        for (size_t bin : bins)
+            if (bin > max_count)
+                max_count = bin;
 
-size_t max_count = bins[0]; //поиск max из корзин
-    for (size_t bin : bins)
-        if (bin > max_count)
-            max_count = bin;
+    size_t IMAGE_HEIGHT = height_sp(bins);
 
-size_t IMAGE_HEIGHT = height_sp(bins);
+    svg_begin(IMAGE_WIDTH, IMAGE_HEIGHT);
+        double top = 0;
+    for (size_t bin : bins) {
+        const double bin_height = BIN_HEIGHT * bin;
+        svg_text(TEXT_LEFT +top, TEXT_BASELINE+TEXT_TOP, to_string(bin));
+        svg_rect(TEXT_LEFT +top, TEXT_WIDTH+TEXT_TOP, BLOCK_WIDTH, bin_height);
+        top+=BLOCK_WIDTH;
+    }
+    svg_text(0,TEXT_TOP, make_info_text());
 
-svg_begin(IMAGE_WIDTH, IMAGE_HEIGHT);
-    double top = 0;
-for (size_t bin : bins) {
-    const double bin_height = BIN_HEIGHT * bin;
-    svg_text(TEXT_LEFT +top, TEXT_BASELINE, to_string(bin));
-    svg_rect(TEXT_LEFT +top, TEXT_WIDTH, BLOCK_WIDTH, bin_height);
-    top+=BLOCK_WIDTH;
-}
-svg_end();
+
+    svg_end();
 }
 
 
